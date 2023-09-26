@@ -1,3 +1,11 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+# Initialize Google Sheets API
+scope = ["https://www.googleapis.com/auth/spreadsheets"]
+creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+client = gspread.authorize(creds)
+
+# Open the spreadsheet
+spreadsheet = client.open("Your Spreadsheet Name")
+worksheet = spreadsheet.sheet1

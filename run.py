@@ -15,7 +15,14 @@ SHEET = GSPREAD_CLIENT.open('Elves-and-Dwarfs')
 
 Stats = SHEET.worksheet('Stats')
 
+# ANSI escape codes for text formatting
+GREEN_TEXT = "\033[32m"
+BLACK_BACKGROUND = "\033[40m"
+ITALIC = "\033[3m"
+RESET_FORMATTING = "\033[0m"
+
 # Character class selection
+print(f"{GREEN_TEXT}{BLACK_BACKGROUND}")
 print("Welcome to The Mighty Land of Elves and Dwarves!")
 print("Choose your starting class:")
 print("1. Elf")
@@ -23,7 +30,7 @@ print("2. Dwarf")
 class_choice = input("Enter the number of your choice: ")
 
 # Customized character name
-character_name = input("Enter your character's name: ")
+character_name = input(f"{ITALIC}Enter your character's name:{RESET_FORMATTING} ")
 
 # Initialize character stats
 if class_choice == "1":
@@ -45,8 +52,9 @@ fourth_chapter_completed = False
 while True:
     # Display game storyline and choices for Chapter 1
     if not first_chapter_completed:
+        print(f"{GREEN_TEXT}{BLACK_BACKGROUND}")
         print("\nChapter 1: The Enchanted Forest")
-        print(f"{character_name}, you find yourself in the heart of an enchanted forest, surrounded by towering trees and mystical creatures.")
+        print(f"{ITALIC}{character_name}{RESET_FORMATTING}, you find yourself in the heart of an enchanted forest, surrounded by towering trees and mystical creatures.")
         print("As you walk deeper into the forest, you encounter a massive tree blocking your path.")
         print("1. Choose to walk around the tree. (+1 Health)")
         print("2. Decide to take on the challenge and try to get rid of the tree. (+1 Strength)")
@@ -71,6 +79,7 @@ while True:
         Stats.insert_rows([character_stats], 2, value_input_option='RAW')  # Insert the row at row 2
 
         first_chapter_completed = True
+
     else:
         # Display game storyline and choices for Chapter 2
         if first_chapter_completed and not second_chapter_completed:
@@ -124,9 +133,10 @@ while True:
                 print("You cautiously search the castle's perimeter and find a hidden entrance, avoiding the haunted grand hall. (Health +2)")
                 health += 2
 
-                # Update character stats in Google Sheets
+                # Update character stats in Google Sheets for Chapter 3
                 updated_stats = [character_name, character_class, health, strength]
-                Stats.update(value=[updated_stats], range_name='A2')  # Update character stats starting from cell 'A2'
+                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+                third_chapter_completed = True
 
             third_chapter_completed = True
 
@@ -153,8 +163,9 @@ while True:
                 health -= 4
                 strength += 1
 
-                # Update character stats in Google Sheets
+                # Update character stats in Google Sheets for Chapter 4
                 updated_stats = [character_name, character_class, health, strength]
-                Stats.update(value=[updated_stats], range_name='A2')  # Update character stats starting from cell 'A2'
+                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+                fourth_chapter_completed = True
 
             fourth_chapter_completed = True

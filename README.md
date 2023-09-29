@@ -54,11 +54,30 @@ Manual testing was performed to ensure the proper functionality of "The Mighty L
 | Error Handling          | Introduce errors, such as incorrect user input or unexpected inputs. | The game should handle errors gracefully, providing clear feedback and not crashing. | As expected | Pass      |
 
 ### Validator Testing
-- HTML and CSS files have been validated using W3C Markup Validation Service and W3C CSS Validation Service, ensuring code compliance.
+- Validator testing with https://pep8ci.herokuapp.com/ 
+- There are no errors except that lines are too long (only lines in which the story is told). I cannot correct this error for the sake of comprehensibility.
 
 ## Bugs
 
 - No known bugs at this time.
+
+## Fixed Bugs
+
+### Indentation Issues
+
+- Resolved various indentation mistakes and code formatting inconsistencies to improve code readability and maintainability.
+
+### Chapter 4 Reset
+
+- Fixed a bug in Chapter 4 that was preventing the game from properly resetting when a player chose to wrong decision.
+
+### Google Sheets Integration
+
+- Addressed issues related to Google Sheets integration for the "Hall of Fame" feature:
+  - Corrected a bug where only one row was displayed in the "Hall of Fame" instead of showing all player achievements.
+  - Improved error handling and communication with Google Sheets to ensure consistent and accurate data retrieval and storage.
+
+These bug fixes enhance the overall gameplay experience and ensure that the game functions smoothly without unexpected errors.
 
 ## Deployment (Heroku.com)
 

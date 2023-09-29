@@ -1,5 +1,6 @@
 import gspread
 import time
+import pyfiglet
 from google.oauth2.service_account import Credentials
 
 # Initialize Google Sheets API
@@ -21,27 +22,33 @@ GREEN_TEXT = "\033[32m"
 BLACK_BACKGROUND = "\033[40m"
 ITALIC = "\033[3m"
 RESET_FORMATTING = "\033[0m"
-"""
-Function to find the row index of a character in the spreadsheet
-"""
+
+
 def find_character_row(character_name):
+    """
+    Function to find the row index of a character in the spreadsheet
+    """
     Stats = SHEET.worksheet('Stats')
     values = Stats.get_all_values()
     for i, row in enumerate(values):
         if row and row[0] == character_name:
             return i + 1  # Return the row index (1-based)
     return None  # Character row not found
-"""
-Function to create a new row with character data in the spreadsheet
-"""
+
+
 def create_character_row(character_name, character_class, health, strength):
+    """
+    Function to create a new row with character data in the spreadsheet
+    """
     Stats = SHEET.worksheet('Stats')
     character_stats = [character_name, character_class, health, strength]
     Stats.append_rows([character_stats], value_input_option='RAW')
-"""
-Function to update character's Health and Strength in the spreadsheet
-"""
+
+
 def update_character_stats(character_name, health, strength):
+    """
+    Function to update character's Health and Strength in the spreadsheet
+    """
     Stats = SHEET.worksheet('Stats')
     row_index = find_character_row(character_name)
     
@@ -51,10 +58,12 @@ def update_character_stats(character_name, health, strength):
         existing_data[2] = health  # Update Health
         existing_data[3] = strength  # Update Strength
         Stats.update(f"A{row_index}:D{row_index}", [existing_data], value_input_option='RAW')
-"""
-Function to transfer character data to the "Hall of Fame" sheet
-"""
+
+
 def transfer_to_hall_of_fame(character_name, character_class, health, strength):
+    """
+    Function to transfer character data to the "Hall of Fame" sheet
+    """
     Stats = SHEET.worksheet('Stats')
     HallOfFame = SHEET.worksheet('Hall of Fame')
     character_stats = [character_name, character_class, health, strength]
@@ -69,8 +78,25 @@ def transfer_to_hall_of_fame(character_name, character_class, health, strength):
         # Delete the character's row from the "Stats" sheet
         Stats.delete_row(row_index)
 
+def display_game_title():
+    """
+    Function to display the game title
+    """
+    title_text = "The Mighty Land of Elves and Dwarves"
+    ascii_art_title = pyfiglet.figlet_format(title_text)
+    print(ascii_art_title)
+
+def display_game_end():
+    """
+    Function to display the game end
+    """
+    end_text = "You are a true Hero "
+    ascii_art_end = pyfiglet.figlet_format(end_text)
+    print(ascii_art_end)
+
 # Character class selection
 print(f"{GREEN_TEXT}{BLACK_BACKGROUND}")
+display_game_title()
 print("Welcome to The Mighty Land of Elves and Dwarves!")
 print("Choose your starting class:")
 print("1. Elf")
@@ -108,6 +134,29 @@ eleventh_chapter_completed = False
 twelfth_chapter_completed = False
 all_chapters_completed = False
 
+skull_ascii_art ="""
+   @@@@@                                        @@@@@
+@@@@@@@                                      @@@@@@@
+@@@@@@@           @@@@@@@@@@@@@@@            @@@@@@@
+ @@@@@@@@       @@@@@@@@@@@@@@@@@@@        @@@@@@@@
+     @@@@@     @@@@@@@@@@@@@@@@@@@@@     @@@@@
+       @@@@@  @@@@@@@@@@@@@@@@@@@@@@@  @@@@@
+         @@  @@@@@@@@@@@@@@@@@@@@@@@@@  @@
+            @@@@@@@    @@@@@@    @@@@@@
+            @@@@@@      @@@@      @@@@@
+            @@@@@@      @@@@      @@@@@
+             @@@@@@    @@@@@@    @@@@@
+              @@@@@@@@@@@  @@@@@@@@@@
+               @@@@@@@@@@  @@@@@@@@@
+           @@   @@@@@@@@@@@@@@@@@   @@
+           @@@@  @@@@ @ @ @ @ @@@@  @@@@
+          @@@@@   @@@ @ @ @ @ @@@   @@@@@
+        @@@@@      @@@@@@@@@@@@@      @@@@@
+      @@@@          @@@@@@@@@@@          @@@@
+   @@@@@              @@@@@@@              @@@@@
+  @@@@@@@                                 @@@@@@@
+   @@@@@                                   @@@@@
+"""
 # Game loop
 while not all_chapters_completed:
     # Display game storyline and choices for Chapter 1
@@ -142,31 +191,30 @@ while not all_chapters_completed:
         time.sleep(2)  # Sleep for 2 seconds
 
     elif first_chapter_completed and not second_chapter_completed:
-            # Display game storyline and choices for Chapter 2
-            print("\nChapter 2: The Mysterious Glowing Orb")
-            print("As you journey further, you stumble upon a clearing bathed in an eerie, otherworldly light.")
-            print("In the center, you notice a mysterious glowing orb.")
-            print("1. Reach out and touch the orb.")
-            print("2. Proceed cautiously around the orb.")
+        # Display game storyline and choices for Chapter 2
+        print("\nChapter 2: The Mysterious Glowing Orb")
+        print("As you journey further, you stumble upon a clearing bathed in an eerie, otherworldly light.")
+        print("In the center, you notice a mysterious glowing orb.")
+        print("1. Reach out and touch the orb.")
+        print("2. Proceed cautiously around the orb.")
 
-            # Input validation loop for Chapter 2
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
+        # Input validation loop for Chapter 2
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
                     print("To continue your journey you must follow the rules. Choose 1 or 2.")
 
-            if choice == "1":
-                print("You reach out and touch the glowing orb, you feel a charge in your body. It feels dark and cold. (-2 Health)")
-                health -= 2
-            elif choice == "2":
-                print("You proceed cautiously around the orb, ensuring your safety and health. (Health +1)") 
-                health += 1
+        if choice == "1":
+            print("You reach out and touch the glowing orb, you feel a charge in your body. It feels dark and cold. (-2 Health)")
+            health -= 2
+        elif choice == "2":
+            print("You proceed cautiously around the orb, ensuring your safety and health. (Health +1)") 
+            health += 1
 
-                # Update character stats in Google Sheets for Chapter 2
-                update_character_stats(character_name, health, strength)
-               
+            # Update character stats in Google Sheets for Chapter 2
+            update_character_stats(character_name, health, strength)
             
             second_chapter_completed = True
 
@@ -199,9 +247,8 @@ while not all_chapters_completed:
             # Update character stats in Google Sheets for Chapter 3
             update_character_stats(character_name, health, strength)
 
-                
-
             third_chapter_completed = True
+
             # delay to be able to follow the story better
             time.sleep(2)  # Sleep for 2 seconds
 
@@ -228,6 +275,7 @@ while not all_chapters_completed:
                 print("Some heroes have already overreached themselves on the way to glory.")
                 print("Unfortunately, you have not been able to earn a place in the Hall of Fame.")
                 print("Fortunately, this is a magical adventure. Just try again.")
+                print(skull_ascii_art)
                  # delay to be able to follow the story better
                 time.sleep(4)  # Sleep for 2 seconds
                 # Reset all chapter completion variables to start the game again
@@ -497,6 +545,7 @@ while not all_chapters_completed:
                     print("The earth shakes, and the very air trembles with the intensity of your confrontation.")
                     print("In a moment of sheer heroism, you emerge victorious, having vanquished the demon and saved the land.")
                     print("Your name will be forever celebrated in legends.")
+                    display_game_end()
                 elif choice == "2":
                     print("You attempt to negotiate with the colossal demon, seeking a peaceful resolution.")
                     print("However, the demon is merciless and strikes you down without hesitation.")

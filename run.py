@@ -150,13 +150,13 @@ print("2. Dwarf")
 
 # Input validation loop for class choice
 while True:
-    class_choice = input("Enter the number of your choice: ")
+    class_choice = input("Enter the number of your choice:\n")
     if class_choice in ["1", "2"]:
         break
     else:
         print("Invalid choice. Please enter 1 for Elf or 2 for Dwarf.")        
 # Customized character name
-character_name = input(f"{ITALIC}Enter your character's name: ")
+character_name = input(f"{ITALIC}Enter your character's name:\n")
 
 # Clear the console screen
 clear_screen()
@@ -202,7 +202,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 1
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -235,7 +235,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 2
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -267,7 +267,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 3
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -298,7 +298,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 4
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -361,7 +361,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 5
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -394,7 +394,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 6
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -427,7 +427,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 7
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -459,7 +459,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 8
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -489,7 +489,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 9
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -519,7 +519,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 10
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -552,7 +552,7 @@ while not all_chapters_completed:
 
         # Input validation loop for Chapter 11
         while True:
-            choice = input("Enter your choice (1 or 2): ")
+            choice = input("Enter your choice (1 or 2):\n")
             if choice in ["1", "2"]:
                 break
             else:
@@ -591,7 +591,7 @@ while not all_chapters_completed:
 
             # Input validation loop for Chapter 12 (Final Boss)
             while True:
-                choice = input("Enter your choice (1 or 2): ")
+                choice = input("Enter your choice (1 or 2):\n")
                 if choice in ["1", "2"]:
                     break
                 else:

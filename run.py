@@ -51,7 +51,6 @@ def update_character_stats(character_name, health, strength):
     """
     Stats = SHEET.worksheet('Stats')
     row_index = find_character_row(character_name)
-    
     if row_index is not None:
         # Character row exists, fetch existing data and update Health and Strength
         existing_data = Stats.row_values(row_index)
@@ -78,6 +77,7 @@ def transfer_to_hall_of_fame(character_name, character_class, health, strength):
         # Delete the character's row from the "Stats" sheet
         Stats.delete_row(row_index)
 
+
 def display_game_title():
     """
     Function to display the game title
@@ -86,6 +86,7 @@ def display_game_title():
     ascii_art_title = pyfiglet.figlet_format(title_text)
     print(ascii_art_title)
 
+
 def display_game_end():
     """
     Function to display the game end
@@ -93,6 +94,7 @@ def display_game_end():
     end_text = "You are a true Hero "
     ascii_art_end = pyfiglet.figlet_format(end_text)
     print(ascii_art_end)
+
 
 # Character class selection
 print(f"{GREEN_TEXT}{BLACK_BACKGROUND}")
@@ -119,7 +121,7 @@ elif class_choice == "2":
 # Create a new row with character data in the spreadsheet
 create_character_row(character_name, character_class, health, strength)
 
-#Initialize a variable to track whether the actual chapter is completed
+# Initialize a variable to track whether the actual chapter is completed
 first_chapter_completed = False
 second_chapter_completed = False
 third_chapter_completed = False
@@ -134,7 +136,7 @@ eleventh_chapter_completed = False
 twelfth_chapter_completed = False
 all_chapters_completed = False
 
-skull_ascii_art ="""
+skull_ascii_art = """
    @@@@@                                        @@@@@
 @@@@@@@                                      @@@@@@@
 @@@@@@@           @@@@@@@@@@@@@@@            @@@@@@@
@@ -183,7 +185,7 @@ while not all_chapters_completed:
             print(f"You summon your {character_class}'s courage and attempt to get rid of the tree, gaining strength.")
             strength += 1
 
-        # Add a new row with character stats for the first chapter
+        # Update character stats in Google Sheets for Chapter 2
         update_character_stats(character_name, health, strength)
 
         first_chapter_completed = True
@@ -204,18 +206,17 @@ while not all_chapters_completed:
             if choice in ["1", "2"]:
                 break
             else:
-                    print("To continue your journey you must follow the rules. Choose 1 or 2.")
+                print("To continue your journey you must follow the rules. Choose 1 or 2.")
 
         if choice == "1":
             print("You reach out and touch the glowing orb, you feel a charge in your body. It feels dark and cold. (-2 Health)")
             health -= 2
         elif choice == "2":
-            print("You proceed cautiously around the orb, ensuring your safety and health. (Health +1)") 
+            print("You proceed cautiously around the orb, ensuring your safety and health. (Health +1)")
             health += 1
 
             # Update character stats in Google Sheets for Chapter 2
             update_character_stats(character_name, health, strength)
-            
             second_chapter_completed = True
 
             # delay to be able to follow the story better
@@ -223,19 +224,19 @@ while not all_chapters_completed:
 
             # Display game storyline and choices for Chapter 3
     elif second_chapter_completed and not third_chapter_completed:
-            print("\nChapter 3: The Haunted Castle")
-            print("As you continue your journey, you come across a looming, ancient castle surrounded by a thick fog.")
-            print("Curiosity gets the better of you, and you decide to explore the castle.")
-            print("1. Enter the castle's grand hall.")
-            print("2. Search the castle's perimeter for another entrance.")
+        print("\nChapter 3: The Haunted Castle")
+        print("As you continue your journey, you come across a looming, ancient castle surrounded by a thick fog.")
+        print("Curiosity gets the better of you, and you decide to explore the castle.")
+        print("1. Enter the castle's grand hall.")
+        print("2. Search the castle's perimeter for another entrance.")
 
-            # Input validation loop for Chapter 3
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey you must follow the rules. Choose 1 or 2.")
+        # Input validation loop for Chapter 3
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey you must follow the rules. Choose 1 or 2.")
 
             if choice == "1":
                 print("You boldly enter the castle's grand hall, but the doors slam shut behind you. The castle is haunted! (-3 Health)")
@@ -254,18 +255,18 @@ while not all_chapters_completed:
 
         # Display game storyline and choices for Chapter 4
     elif third_chapter_completed and not fourth_chapter_completed:
-            print("\nChapter 4: The Dragon's Lair")
-            print("Deep within the castle, you discover a hidden chamber. At the center of the chamber lies a slumbering dragon.")
-            print("1. Attempt to sneak past the dragon and continue your quest. ")
-            print("2. Wake up the dragon to face it head-on. ")
+        print("\nChapter 4: The Dragon's Lair")
+        print("Deep within the castle, you discover a hidden chamber. At the center of the chamber lies a slumbering dragon.")
+        print("1. Attempt to sneak past the dragon and continue your quest. ")
+        print("2. Wake up the dragon to face it head-on. ")
 
-            # Input validation loop for Chapter 4
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey you must follow the rules. Choose 1 or 2.")
+        # Input validation loop for Chapter 4
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey you must follow the rules. Choose 1 or 2.")
 
             if choice == "1":
                 print("You silently tiptoe past the dragon, avoiding a fiery confrontation. (+2 Strength)")
@@ -276,7 +277,7 @@ while not all_chapters_completed:
                 print("Unfortunately, you have not been able to earn a place in the Hall of Fame.")
                 print("Fortunately, this is a magical adventure. Just try again.")
                 print(skull_ascii_art)
-                 # delay to be able to follow the story better
+                # delay to be able to follow the story better
                 time.sleep(4)  # Sleep for 2 seconds
                 # Reset all chapter completion variables to start the game again
                 first_chapter_completed = False
@@ -295,26 +296,25 @@ while not all_chapters_completed:
 
             # Update character stats in Google Sheets for Chapter 4
             update_character_stats(character_name, health, strength)
-            
             fourth_chapter_completed = True
             # delay to be able to follow the story better
             time.sleep(2)  # Sleep for 2 seconds
 
     elif fourth_chapter_completed and not fifth_chapter_completed:
-            # Display game storyline and choices for Chapter 5
-            print("\nChapter 5: The Lost Temple")
-            print(f"{ITALIC}{character_name}, your journey leads you to a dense jungle, and you stumble upon an ancient temple.")
-            print("Legends speak of great treasures hidden within, but the temple is said to be cursed.")
-            print("1. Enter the temple in search of treasure. ")
-            print("2. Avoid the cursed temple and continue your journey.")
+        # Display game storyline and choices for Chapter 5
+        print("\nChapter 5: The Lost Temple")
+        print(f"{ITALIC}{character_name}, your journey leads you to a dense jungle, and you stumble upon an ancient temple.")
+        print("Legends speak of great treasures hidden within, but the temple is said to be cursed.")
+        print("1. Enter the temple in search of treasure. ")
+        print("2. Avoid the cursed temple and continue your journey.")
 
-            # Input validation loop for Chapter 5
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey, choose 1 or 2.")
+        # Input validation loop for Chapter 5
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey, choose 1 or 2.")
 
             if choice == "1":
                 print("You decide to brave the curse and enter the temple, but it takes a toll on your health. (-3 Health)")
@@ -325,27 +325,26 @@ while not all_chapters_completed:
 
             # Update character stats in Google Sheets for Chapter 5
             update_character_stats(character_name, health, strength)
-            
             fifth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 6
-            time.sleep(2)  # Sleep for 2 seconds 
+            time.sleep(2)  # Sleep for 2 seconds
 
     elif fifth_chapter_completed and not sixth_chapter_completed:
-            # Display game storyline and choices for Chapter 6
-            print("\nChapter 6: The Desert Oasis")
-            print(f"{ITALIC}{character_name}, you find yourself in a vast desert with no end in sight.")
-            print("You're thirsty and exhausted when you suddenly spot an oasis in the distance.")
-            print("1. Rush towards the oasis in desperation. ")
-            print("2. Approach the oasis cautiously. ")
+        # Display game storyline and choices for Chapter 6
+        print("\nChapter 6: The Desert Oasis")
+        print(f"{ITALIC}{character_name}, you find yourself in a vast desert with no end in sight.")
+        print("You're thirsty and exhausted when you suddenly spot an oasis in the distance.")
+        print("1. Rush towards the oasis in desperation. ")
+        print("2. Approach the oasis cautiously. ")
 
-            # Input validation loop for Chapter 6
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey, choose 1 or 2.")
+        # Input validation loop for Chapter 6
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey, choose 1 or 2.")
 
             if choice == "1":
                 print("Your thirst drives you to rush towards the oasis, but it's a mirage! You lose health and gain strength. (-2 Health, +2 Strength)")
@@ -357,27 +356,26 @@ while not all_chapters_completed:
 
             # Update character stats in Google Sheets for Chapter 6
             update_character_stats(character_name, health, strength)
-            
             sixth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 7
             time.sleep(2)  # Sleep for 2 seconds
 
     elif sixth_chapter_completed and not seventh_chapter_completed:
-            # Display game storyline and choices for Chapter 7
-            print("\nChapter 7: The Enchanted Lake")
-            print(f"{ITALIC}{character_name}, your journey leads you to the shores of an enchanted lake.")
-            print("You see a magical creature in the water, seemingly beckoning you.")
-            print("1. Dive into the lake to meet the creature. ")
-            print("2. Stay by the shore and observe from a distance. ")
+        # Display game storyline and choices for Chapter 7
+        print("\nChapter 7: The Enchanted Lake")
+        print(f"{ITALIC}{character_name}, your journey leads you to the shores of an enchanted lake.")
+        print("You see a magical creature in the water, seemingly beckoning you.")
+        print("1. Dive into the lake to meet the creature. ")
+        print("2. Stay by the shore and observe from a distance. ")
 
-            # Input validation loop for Chapter 7
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey, choose 1 or 2.")
+        # Input validation loop for Chapter 7
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey, choose 1 or 2.")
 
             if choice == "1":
                 print("You dive into the lake to meet the creature, but it's a test of your courage and health. (-3 Health)")
@@ -388,27 +386,26 @@ while not all_chapters_completed:
 
             # Update character stats in Google Sheets for Chapter 7
             update_character_stats(character_name, health, strength)
-            
             seventh_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 8
-            time.sleep(2)  # Sleep for 2 seconds 
+            time.sleep(2)  # Sleep for 2 seconds
 
     elif seventh_chapter_completed and not eighth_chapter_completed:
-            # Display game storyline and choices for Chapter 8
-            print("\nChapter 8: The Forgotten Realm")
-            print(f"{ITALIC}{character_name}, your journey takes an unexpected turn as you stumble upon a portal to a forgotten realm.")
-            print("This realm is said to hold ancient secrets and untold mysteries.")
-            print("1. Enter the portal and explore the forgotten realm. ")
-            print("2. Stay on your current path and continue your quest. ")
+        # Display game storyline and choices for Chapter 8
+        print("\nChapter 8: The Forgotten Realm")
+        print(f"{ITALIC}{character_name}, your journey takes an unexpected turn as you stumble upon a portal to a forgotten realm.")
+        print("This realm is said to hold ancient secrets and untold mysteries.")
+        print("1. Enter the portal and explore the forgotten realm. ")
+        print("2. Stay on your current path and continue your quest. ")
 
-            # Input validation loop for Chapter 8
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey, choose 1 or 2.")
+        # Input validation loop for Chapter 8
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey, choose 1 or 2.")
 
             if choice == "1":
                 print("You decide to enter the portal and explore the forgotten realm, but it takes a toll on your health. (-3 Health)")
@@ -424,20 +421,20 @@ while not all_chapters_completed:
             time.sleep(2)  # Sleep for 2 seconds
 
     elif eighth_chapter_completed and not ninth_chapter_completed:
-            # Display game storyline and choices for Chapter 9
-            print("\nChapter 9: The Dark Enchantment")
-            print(f"{ITALIC}{character_name}, as you journey further, you encounter a dark enchantment that threatens the land.")
-            print("You must decide how to confront this malevolent force.")
-            print("1. Confront the enchantment with your newfound strength. ")
-            print("2. Seek the help of a wise elder in the nearby village. ")
+        # Display game storyline and choices for Chapter 9
+        print("\nChapter 9: The Dark Enchantment")
+        print(f"{ITALIC}{character_name}, as you journey further, you encounter a dark enchantment that threatens the land.")
+        print("You must decide how to confront this malevolent force.")
+        print("1. Confront the enchantment with your newfound strength. ")
+        print("2. Seek the help of a wise elder in the nearby village. ")
 
-            # Input validation loop for Chapter 9
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey, choose 1 or 2.")
+        # Input validation loop for Chapter 9
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey, choose 1 or 2.")
 
             if choice == "1":
                 print("You confront the dark enchantment using your newfound strength, but it takes a toll on your health. (-2 Health)")
@@ -448,27 +445,26 @@ while not all_chapters_completed:
 
             # Update character stats in Google Sheets for Chapter 9
             update_character_stats(character_name, health, strength)
-            
             ninth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 10
-            time.sleep(2)  # Sleep for 2 seconds 
+            time.sleep(2)  # Sleep for 2 seconds
 
     elif ninth_chapter_completed and not tenth_chapter_completed:
-            # Display game storyline and choices for Chapter 10
-            print("\nChapter 10: The Hidden Treasures")
-            print(f"{ITALIC}{character_name}, your quest leads you to an ancient library filled with knowledge and hidden treasures.")
-            print("You must decide how to explore this mysterious place.")
-            print("1. Search for hidden treasures. ")
-            print("2. Study ancient tomes and gain knowledge. ")
+        # Display game storyline and choices for Chapter 10
+        print("\nChapter 10: The Hidden Treasures")
+        print(f"{ITALIC}{character_name}, your quest leads you to an ancient library filled with knowledge and hidden treasures.")
+        print("You must decide how to explore this mysterious place.")
+        print("1. Search for hidden treasures. ")
+        print("2. Study ancient tomes and gain knowledge. ")
 
-            # Input validation loop for Chapter 10
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey, choose 1 or 2.")
+        # Input validation loop for Chapter 10
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey, choose 1 or 2.")
 
             if choice == "1":
                 print("You search for hidden treasures in the library, but it takes a toll on your health. (-2 Health, +2 Strength)")
@@ -481,27 +477,26 @@ while not all_chapters_completed:
 
             # Update character stats in Google Sheets for Chapter 10
             update_character_stats(character_name, health, strength)
-            
             tenth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 11
-            time.sleep(2)  # Sleep for 2 seconds 
+            time.sleep(2)  # Sleep for 2 seconds
 
     elif tenth_chapter_completed and not eleventh_chapter_completed:
-            # Display game storyline and choices for Chapter 11
-            print("\nChapter 11: The Elemental Challenge")
-            print(f"{ITALIC}{character_name}, your journey takes you to an elemental realm where you must face elemental challenges.")
-            print("You must decide how to confront these powerful forces.")
-            print("1. Harness the power of the elements. ")
-            print("2. Seek the guidance of elemental guardians. ")
+        # Display game storyline and choices for Chapter 11
+        print("\nChapter 11: The Elemental Challenge")
+        print(f"{ITALIC}{character_name}, your journey takes you to an elemental realm where you must face elemental challenges.")
+        print("You must decide how to confront these powerful forces.")
+        print("1. Harness the power of the elements. ")
+        print("2. Seek the guidance of elemental guardians. ")
 
-            # Input validation loop for Chapter 11
-            while True:
-                choice = input("Enter your choice (1 or 2): ")
-                if choice in ["1", "2"]:
-                    break
-                else:
-                    print("To continue your journey, choose 1 or 2.")
+        # Input validation loop for Chapter 11
+        while True:
+            choice = input("Enter your choice (1 or 2): ")
+            if choice in ["1", "2"]:
+                break
+            else:
+                print("To continue your journey, choose 1 or 2.")
 
             if choice == "1":
                 print("You harness the power of the elements, gaining incredible strength. (+4 Strength)")
@@ -511,32 +506,31 @@ while not all_chapters_completed:
 
             # Update character stats in Google Sheets for Chapter 11
             update_character_stats(character_name, health, strength)
-            
             eleventh_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 12
-            time.sleep(2)  # Sleep for 2 seconds 
+            time.sleep(2)  # Sleep for 2 seconds
 
     elif eleventh_chapter_completed and not twelfth_chapter_completed:
-            # Display game storyline and choices for Chapter 12 (Final Boss)
-            print("\nChapter 12: The Demonic Showdown (Final Boss)")
-            print(f"{ITALIC}{character_name}, your epic journey culminates in a dark and foreboding chamber.")
-            print("Before you stands a colossal, menacing demon, its eyes ablaze with malevolence, and its towering form wreathed in shadow.")
-            print("This is the ultimate test of your strength, courage, and wit.")
+        # Display game storyline and choices for Chapter 12 (Final Boss)
+        print("\nChapter 12: The Demonic Showdown (Final Boss)")
+        print(f"{ITALIC}{character_name}, your epic journey culminates in a dark and foreboding chamber.")
+        print("Before you stands a colossal, menacing demon, its eyes ablaze with malevolence, and its towering form wreathed in shadow.")
+        print("This is the ultimate test of your strength, courage, and wit.")
 
-            # Check if the conditions are met to engage in the final fight
-            if strength >= 10 and (first_chapter_completed and second_chapter_completed and third_chapter_completed and fourth_chapter_completed):
-                print("You are well-prepared for this final battle, having made the right decisions and grown stronger throughout your journey.")
-                print("1. Engage in a fierce battle with the demon, drawing upon all your might and resolve.")
-                print("2. Attempt to negotiate with the demon, seeking a way to end the conflict peacefully. ")
+        # Check if the conditions are met to engage in the final fight
+        if strength >= 10 and (first_chapter_completed and second_chapter_completed and third_chapter_completed and fourth_chapter_completed):
+            print("You are well-prepared for this final battle, having made the right decisions and grown stronger throughout your journey.")
+            print("1. Engage in a fierce battle with the demon, drawing upon all your might and resolve.")
+            print("2. Attempt to negotiate with the demon, seeking a way to end the conflict peacefully. ")
 
-                # Input validation loop for Chapter 12 (Final Boss)
-                while True:
-                    choice = input("Enter your choice (1 or 2): ")
-                    if choice in ["1", "2"]:
-                        break
-                    else:
-                        print("To face this formidable foe, choose 1 or 2.")
+            # Input validation loop for Chapter 12 (Final Boss)
+            while True:
+                choice = input("Enter your choice (1 or 2): ")
+                if choice in ["1", "2"]:
+                    break
+                else:
+                    print("To face this formidable foe, choose 1 or 2.")
 
                 if choice == "1":
                     print("You steel yourself for a fierce battle with the colossal demon, your heart filled with determination. (+5 Strength)")
@@ -573,7 +567,6 @@ while not all_chapters_completed:
                 print("You must acknowledge your limitations and seek a different path to achieve victory.")
 
             twelfth_chapter_completed = True
-            
     # Check if the game is completed (e.g., after Chapter 12)
     if (
         first_chapter_completed and
@@ -601,5 +594,4 @@ hall_of_fame_data = HallOfFame.get_all_values()
 print("\nHall of Fame:")
 for row in hall_of_fame_data:
     print(f"Name: {row[0]}, Class: {row[1]}, Health: {row[2]}, Strength: {row[3]}")
-    # Exit the game loop
     break

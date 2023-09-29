@@ -22,14 +22,48 @@ BLACK_BACKGROUND = "\033[40m"
 ITALIC = "\033[3m"
 RESET_FORMATTING = "\033[0m"
 
-# Function to fetch the row number for storing data
-def get_character_row(character_name):
-    worksheet = Stats
-    values = worksheet.get_all_values()
+# Function to find the row index of a character in the spreadsheet
+def find_character_row(character_name):
+    Stats = SHEET.worksheet('Stats')
+    values = Stats.get_all_values()
     for i, row in enumerate(values):
         if row and row[0] == character_name:
-            return i + 1  # Return the row number (1-based)
+            return i + 1  # Return the row index (1-based)
     return None  # Character row not found
+
+# Function to create a new row with character data in the spreadsheet
+def create_character_row(character_name, character_class, health, strength):
+    Stats = SHEET.worksheet('Stats')
+    character_stats = [character_name, character_class, health, strength]
+    Stats.append_rows([character_stats], value_input_option='RAW')
+
+# Function to update character's Health and Strength in the spreadsheet
+def update_character_stats(character_name, health, strength):
+    Stats = SHEET.worksheet('Stats')
+    row_index = find_character_row(character_name)
+    
+    if row_index is not None:
+        # Character row exists, fetch existing data and update Health and Strength
+        existing_data = Stats.row_values(row_index)
+        existing_data[2] = health  # Update Health
+        existing_data[3] = strength  # Update Strength
+        Stats.update(f"A{row_index}:D{row_index}", [existing_data], value_input_option='RAW')
+
+# Function to transfer character data to the "Hall of Fame" sheet
+def transfer_to_hall_of_fame(character_name, character_class, health, strength):
+    Stats = SHEET.worksheet('Stats')
+    HallOfFame = SHEET.worksheet('Hall of Fame')
+    character_stats = [character_name, character_class, health, strength]
+
+    # Find the character's row in the "Stats" sheet
+    row_index = find_character_row(character_name)
+
+    if row_index is not None:
+        # Copy the character's data to the "Hall of Fame" sheet
+        HallOfFame.append_rows([character_stats], value_input_option='RAW')
+
+        # Delete the character's row from the "Stats" sheet
+        Stats.delete_row(row_index)
 
 # Character class selection
 print(f"{GREEN_TEXT}{BLACK_BACKGROUND}")
@@ -42,29 +76,18 @@ class_choice = input("Enter the number of your choice: ")
 # Customized character name
 character_name = input(f"{ITALIC}Enter your character's name: ")
 
-# Check if the character already exists in the spreadsheet
-character_row = get_character_row(character_name)
+# Initialize character's stats
+if class_choice == "1":
+    character_class = "Elf"
+    health = 40
+    strength = 2
+elif class_choice == "2":
+    character_class = "Dwarf"
+    health = 20
+    strength = 4
 
-# If the character exists, update the existing row; otherwise, insert a new row
-if character_row is not None:
-    # Character row exists, fetch existing stats and update them
-    character_stats = Stats.row_values(character_row)
-    character_class, health, strength = character_stats[1], int(character_stats[2]), int(character_stats[3])
-else:
-    # Character row doesn't exist, create a new row
-    if class_choice == "1":
-        character_class = "Elf"
-        health = 40
-        strength = 2
-    elif class_choice == "2":
-        character_class = "Dwarf"
-        health = 20
-        strength = 4
-
-    # Add a new row with character stats
-    character_stats = [character_name, character_class, health, strength]
-    Stats.append_table(character_stats, value_input_option='RAW')
-
+# Create a new row with character data in the spreadsheet
+create_character_row(character_name, character_class, health, strength)
 
 #Initialize a variable to track whether the actual chapter is completed
 first_chapter_completed = False
@@ -79,9 +102,10 @@ ninth_chapter_completed = False
 tenth_chapter_completed = False
 eleventh_chapter_completed = False
 twelfth_chapter_completed = False
+all_chapters_completed = False
 
 # Game loop
-while True:
+while not all_chapters_completed:
     # Display game storyline and choices for Chapter 1
     if not first_chapter_completed:
         print(f"{GREEN_TEXT}{BLACK_BACKGROUND}")
@@ -107,8 +131,7 @@ while True:
             strength += 1
 
         # Add a new row with character stats for the first chapter
-        character_stats = [character_name, character_class, health, strength]
-        Stats.insert_rows([character_stats], 2, value_input_option='RAW')  # Insert the row at row 2
+        update_character_stats(character_name, health, strength)
 
         first_chapter_completed = True
         # delay to be able to follow the story better
@@ -138,8 +161,8 @@ while True:
                 health += 1
 
                 # Update character stats in Google Sheets for Chapter 2
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+                update_character_stats(character_name, health, strength)
+               
             
             second_chapter_completed = True
 
@@ -169,10 +192,10 @@ while True:
                 print("You cautiously search the castle's perimeter and find a hidden entrance, avoiding the haunted grand hall. (Health +2)")
                 health += 2
 
-                # Update character stats in Google Sheets for Chapter 3
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
-                third_chapter_completed = True
+            # Update character stats in Google Sheets for Chapter 3
+            update_character_stats(character_name, health, strength)
+
+                
 
             third_chapter_completed = True
             # delay to be able to follow the story better
@@ -220,8 +243,7 @@ while True:
                 continue  # Restart the game loop
 
             # Update character stats in Google Sheets for Chapter 4
-            updated_stats = [character_name, character_class, health, strength]
-            Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+            update_character_stats(character_name, health, strength)
             
             fourth_chapter_completed = True
             # delay to be able to follow the story better
@@ -250,9 +272,8 @@ while True:
                 print("You wisely avoid the cursed temple and continue your journey.")
                 health += 1
 
-                # Update character stats in Google Sheets for Chapter 5
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+            # Update character stats in Google Sheets for Chapter 5
+            update_character_stats(character_name, health, strength)
             
             fifth_chapter_completed = True
 
@@ -283,9 +304,8 @@ while True:
                 print("You approach the oasis cautiously, preserving your health and feeling refreshed. (+1 Health)")
                 health += 1
 
-                # Update character stats in Google Sheets for Chapter 6
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+            # Update character stats in Google Sheets for Chapter 6
+            update_character_stats(character_name, health, strength)
             
             sixth_chapter_completed = True
 
@@ -315,9 +335,8 @@ while True:
                 print("You stay by the shore and observe the creature from a distance, preserving your health.")
                 health += 1
 
-                # Update character stats in Google Sheets for Chapter 7
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+            # Update character stats in Google Sheets for Chapter 7
+            update_character_stats(character_name, health, strength)
             
             seventh_chapter_completed = True
 
@@ -346,10 +365,8 @@ while True:
             elif choice == "2":
                 print("You choose to stay on your current path, focusing on your quest and gaining strength. (+2 Strength)")
 
-                # Update character stats in Google Sheets for Chapter 8
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
-            
+            # Update character stats in Google Sheets for Chapter 8
+            update_character_stats(character_name, health, strength)
             eighth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 9
@@ -378,9 +395,8 @@ while True:
                 print("You seek the help of a wise elder in the nearby village, preserving your health and gaining valuable knowledge. (+1 Health)")
                 health += 1
 
-                # Update character stats in Google Sheets for Chapter 9
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+            # Update character stats in Google Sheets for Chapter 9
+            update_character_stats(character_name, health, strength)
             
             ninth_chapter_completed = True
 
@@ -412,9 +428,8 @@ while True:
                 health += 1
                 strength += 1
 
-                # Update character stats in Google Sheets for Chapter 10
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+            # Update character stats in Google Sheets for Chapter 10
+            update_character_stats(character_name, health, strength)
             
             tenth_chapter_completed = True
 
@@ -443,9 +458,8 @@ while True:
             elif choice == "2":
                 print("You seek the guidance of elemental guardians, receiving their blessings and improving your health. (+3 Health)")
 
-                # Update character stats in Google Sheets for Chapter 11
-                updated_stats = [character_name, character_class, health, strength]
-                Stats.insert_rows([updated_stats], 2, value_input_option='RAW')  # Increment the row number
+            # Update character stats in Google Sheets for Chapter 11
+            update_character_stats(character_name, health, strength)
             
             eleventh_chapter_completed = True
 
@@ -507,15 +521,33 @@ while True:
                 print("You must acknowledge your limitations and seek a different path to achieve victory.")
 
             twelfth_chapter_completed = True
-            # Introduce a delay before exiting the game loop (End of Game)
-            time.sleep(2)  # Sleep for 2 seconds 
+            
+    # Check if the game is completed (e.g., after Chapter 12)
+    if (
+        first_chapter_completed and
+        second_chapter_completed and
+        third_chapter_completed and
+        fourth_chapter_completed and
+        fifth_chapter_completed and
+        sixth_chapter_completed and
+        seventh_chapter_completed and
+        eighth_chapter_completed and
+        ninth_chapter_completed and
+        tenth_chapter_completed and
+        eleventh_chapter_completed and
+        twelfth_chapter_completed
+    ):
+        all_chapters_completed = True
 
-            # Fetch all data from the spreadsheet and display the Hall of Glory
-            worksheet = SHEET.get_worksheet(0)  # Change to the correct worksheet index
-            all_data = worksheet.get_all_values()
+# Transfer character data to the "Hall of Fame" sheet
+transfer_to_hall_of_fame(character_name, character_class, health, strength)
 
-            print("\nHall of Glory:")
-            print("Name\tClass\tHealth\tStrength")
-            for row in all_data[1:]:  # Skip the header row
-                name, char_class, health, strength = row
-                print(f"{name}\t{char_class}\t{health}\t{strength}")
+# Display the "Hall of Fame" in the console
+HallOfFame = SHEET.worksheet('Hall of Fame')
+hall_of_fame_data = HallOfFame.get_all_values()
+
+print("\nHall of Fame:")
+for row in hall_of_fame_data:
+    print(f"Name: {row[0]}, Class: {row[1]}, Health: {row[2]}, Strength: {row[3]}")
+    # Exit the game loop
+    break

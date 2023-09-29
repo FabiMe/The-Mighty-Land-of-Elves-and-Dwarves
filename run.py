@@ -154,8 +154,7 @@ while True:
     if class_choice in ["1", "2"]:
         break
     else:
-        print("Invalid choice. Please enter 1 for Elf or 2 for Dwarf.")
-        
+        print("Invalid choice. Please enter 1 for Elf or 2 for Dwarf.")        
 # Customized character name
 character_name = input(f"{ITALIC}Enter your character's name: ")
 

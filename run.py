@@ -1,6 +1,7 @@
 import gspread
 import time
 import pyfiglet
+import os
 from google.oauth2.service_account import Credentials
 
 # Initialize Google Sheets API
@@ -56,8 +57,10 @@ def update_character_stats(character_name, health, strength):
         existing_data = Stats.row_values(row_index)
         existing_data[2] = health  # Update Health
         existing_data[3] = strength  # Update Strength
-        Stats.update(f"A{row_index}:D{row_index}", [
-                     existing_data], value_input_option='RAW')
+
+        # Update Health (column C) and Strength (column D)
+        Stats.update_cell(row_index, 3, health)
+        Stats.update_cell(row_index, 4, strength)
 
 
 def transfer_to_hall_of_fame(character_name, character_class, health, strength):
@@ -97,6 +100,46 @@ def display_game_end():
     print(ascii_art_end)
 
 
+def display_hall_of_fame():
+    """
+    Function to display the Hall of Fame
+    """
+    hall_of_fame_text = "Hall of Fame "
+    ascii_art_fame = pyfiglet.figlet_format(hall_of_fame_text)
+    print(ascii_art_fame)
+
+
+def clear_screen():
+    """
+    # Clear the console screen
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+skull_ascii_art = """
+   @@@@@                                        @@@@@
+@@@@@@@                                      @@@@@@@
+@@@@@@@           @@@@@@@@@@@@@@@            @@@@@@@
+ @@@@@@@@       @@@@@@@@@@@@@@@@@@@        @@@@@@@@
+     @@@@@     @@@@@@@@@@@@@@@@@@@@@     @@@@@
+       @@@@@  @@@@@@@@@@@@@@@@@@@@@@@  @@@@@
+         @@  @@@@@@@@@@@@@@@@@@@@@@@@@  @@
+            @@@@@@@    @@@@@@    @@@@@@
+            @@@@@@      @@@@      @@@@@
+            @@@@@@      @@@@      @@@@@
+             @@@@@@    @@@@@@    @@@@@
+              @@@@@@@@@@@  @@@@@@@@@@
+               @@@@@@@@@@  @@@@@@@@@
+           @@   @@@@@@@@@@@@@@@@@   @@
+           @@@@  @@@@ @ @ @ @ @@@@  @@@@
+          @@@@@   @@@ @ @ @ @ @@@   @@@@@
+        @@@@@      @@@@@@@@@@@@@      @@@@@
+      @@@@          @@@@@@@@@@@          @@@@
+   @@@@@              @@@@@@@              @@@@@
+  @@@@@@@                                 @@@@@@@
+   @@@@@                                   @@@@@
+"""
+
 # Character class selection
 print(f"{GREEN_TEXT}{BLACK_BACKGROUND}")
 display_game_title()
@@ -104,10 +147,20 @@ print("Welcome to The Mighty Land of Elves and Dwarves!")
 print("Choose your starting class:")
 print("1. Elf")
 print("2. Dwarf")
-class_choice = input("Enter the number of your choice: ")
 
+# Input validation loop for class choice
+while True:
+    class_choice = input("Enter the number of your choice: ")
+    if class_choice in ["1", "2"]:
+        break
+    else:
+        print("Invalid choice. Please enter 1 for Elf or 2 for Dwarf.")
+        
 # Customized character name
 character_name = input(f"{ITALIC}Enter your character's name: ")
+
+# Clear the console screen
+clear_screen()
 
 # Initialize character's stats
 if class_choice == "1":
@@ -137,29 +190,6 @@ eleventh_chapter_completed = False
 twelfth_chapter_completed = False
 all_chapters_completed = False
 
-skull_ascii_art = """
-   @@@@@                                        @@@@@
-@@@@@@@                                      @@@@@@@
-@@@@@@@           @@@@@@@@@@@@@@@            @@@@@@@
- @@@@@@@@       @@@@@@@@@@@@@@@@@@@        @@@@@@@@
-     @@@@@     @@@@@@@@@@@@@@@@@@@@@     @@@@@
-       @@@@@  @@@@@@@@@@@@@@@@@@@@@@@  @@@@@
-         @@  @@@@@@@@@@@@@@@@@@@@@@@@@  @@
-            @@@@@@@    @@@@@@    @@@@@@
-            @@@@@@      @@@@      @@@@@
-            @@@@@@      @@@@      @@@@@
-             @@@@@@    @@@@@@    @@@@@
-              @@@@@@@@@@@  @@@@@@@@@@
-               @@@@@@@@@@  @@@@@@@@@
-           @@   @@@@@@@@@@@@@@@@@   @@
-           @@@@  @@@@ @ @ @ @ @@@@  @@@@
-          @@@@@   @@@ @ @ @ @ @@@   @@@@@
-        @@@@@      @@@@@@@@@@@@@      @@@@@
-      @@@@          @@@@@@@@@@@          @@@@
-   @@@@@              @@@@@@@              @@@@@
-  @@@@@@@                                 @@@@@@@
-   @@@@@                                   @@@@@
-"""
 # Game loop
 while not all_chapters_completed:
     # Display game storyline and choices for Chapter 1
@@ -189,10 +219,10 @@ while not all_chapters_completed:
                 f"You summon your {character_class}'s courage and attempt to get rid of the tree, gaining strength.")
             strength += 1
 
-        # Update character stats in Google Sheets for Chapter 2
+        # Update character stats in Google Sheets for Chapter 1
         update_character_stats(character_name, health, strength)
-
         first_chapter_completed = True
+
         # delay to be able to follow the story better
         time.sleep(2)  # Sleep for 2 seconds
 
@@ -221,7 +251,7 @@ while not all_chapters_completed:
                 "You proceed cautiously around the orb, ensuring your safety and health. (Health +1)")
             health += 1
 
-            # Update character stats in Google Sheets for Chapter 2
+        # Update character stats in Google Sheets for Chapter 2
         update_character_stats(character_name, health, strength)
         second_chapter_completed = True
 
@@ -290,6 +320,17 @@ while not all_chapters_completed:
             print(skull_ascii_art)
             # delay to be able to follow the story better
             time.sleep(4)  # Sleep for 2 seconds
+
+            # Reset character's stats to default based on class
+            if class_choice == "1":
+                character_class = "Elf"
+                health = 40
+                strength = 2
+            elif class_choice == "2":
+                character_class = "Dwarf"
+                health = 20
+                strength = 4
+
             # Reset all chapter completion variables to start the game again
             first_chapter_completed = False
             second_chapter_completed = False
@@ -624,9 +665,9 @@ transfer_to_hall_of_fame(character_name, character_class, health, strength)
 # Display the "Hall of Fame" in the console
 HallOfFame = SHEET.worksheet('Hall of Fame')
 hall_of_fame_data = HallOfFame.get_all_values()
-
-print("\nHall of Fame:")
+clear_screen()
+display_hall_of_fame()
 for row in hall_of_fame_data:
     print(
         f"Name: {row[0]}, Class: {row[1]}, Health: {row[2]}, Strength: {row[3]}")
-    break
+    

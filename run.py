@@ -21,8 +21,9 @@ GREEN_TEXT = "\033[32m"
 BLACK_BACKGROUND = "\033[40m"
 ITALIC = "\033[3m"
 RESET_FORMATTING = "\033[0m"
-
-# Function to find the row index of a character in the spreadsheet
+"""
+Function to find the row index of a character in the spreadsheet
+"""
 def find_character_row(character_name):
     Stats = SHEET.worksheet('Stats')
     values = Stats.get_all_values()
@@ -30,14 +31,16 @@ def find_character_row(character_name):
         if row and row[0] == character_name:
             return i + 1  # Return the row index (1-based)
     return None  # Character row not found
-
-# Function to create a new row with character data in the spreadsheet
+"""
+Function to create a new row with character data in the spreadsheet
+"""
 def create_character_row(character_name, character_class, health, strength):
     Stats = SHEET.worksheet('Stats')
     character_stats = [character_name, character_class, health, strength]
     Stats.append_rows([character_stats], value_input_option='RAW')
-
-# Function to update character's Health and Strength in the spreadsheet
+"""
+Function to update character's Health and Strength in the spreadsheet
+"""
 def update_character_stats(character_name, health, strength):
     Stats = SHEET.worksheet('Stats')
     row_index = find_character_row(character_name)
@@ -48,8 +51,9 @@ def update_character_stats(character_name, health, strength):
         existing_data[2] = health  # Update Health
         existing_data[3] = strength  # Update Strength
         Stats.update(f"A{row_index}:D{row_index}", [existing_data], value_input_option='RAW')
-
-# Function to transfer character data to the "Hall of Fame" sheet
+"""
+Function to transfer character data to the "Hall of Fame" sheet
+"""
 def transfer_to_hall_of_fame(character_name, character_class, health, strength):
     Stats = SHEET.worksheet('Stats')
     HallOfFame = SHEET.worksheet('Hall of Fame')
@@ -169,7 +173,7 @@ while not all_chapters_completed:
             # delay to be able to follow the story better
             time.sleep(2)  # Sleep for 2 seconds
 
-        # Display game storyline and choices for Chapter 3
+            # Display game storyline and choices for Chapter 3
     elif second_chapter_completed and not third_chapter_completed:
             print("\nChapter 3: The Haunted Castle")
             print("As you continue your journey, you come across a looming, ancient castle surrounded by a thick fog.")
@@ -203,7 +207,6 @@ while not all_chapters_completed:
 
         # Display game storyline and choices for Chapter 4
     elif third_chapter_completed and not fourth_chapter_completed:
-            # Display game storyline and choices for Chapter 4
             print("\nChapter 4: The Dragon's Lair")
             print("Deep within the castle, you discover a hidden chamber. At the center of the chamber lies a slumbering dragon.")
             print("1. Attempt to sneak past the dragon and continue your quest. ")
@@ -278,7 +281,7 @@ while not all_chapters_completed:
             fifth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 6
-            time.sleep(2)  # Sleep for 2 seconds (adjust the delay as needed)
+            time.sleep(2)  # Sleep for 2 seconds 
 
     elif fifth_chapter_completed and not sixth_chapter_completed:
             # Display game storyline and choices for Chapter 6
@@ -310,7 +313,7 @@ while not all_chapters_completed:
             sixth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 7
-            time.sleep(2)  # Sleep for 2 seconds (adjust the delay as needed)
+            time.sleep(2)  # Sleep for 2 seconds
 
     elif sixth_chapter_completed and not seventh_chapter_completed:
             # Display game storyline and choices for Chapter 7
@@ -341,7 +344,7 @@ while not all_chapters_completed:
             seventh_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 8
-            time.sleep(2)  # Sleep for 2 seconds (adjust the delay as needed)
+            time.sleep(2)  # Sleep for 2 seconds 
 
     elif seventh_chapter_completed and not eighth_chapter_completed:
             # Display game storyline and choices for Chapter 8
@@ -401,7 +404,7 @@ while not all_chapters_completed:
             ninth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 10
-            time.sleep(2)  # Sleep for 2 seconds (adjust the delay as needed)
+            time.sleep(2)  # Sleep for 2 seconds 
 
     elif ninth_chapter_completed and not tenth_chapter_completed:
             # Display game storyline and choices for Chapter 10
@@ -434,7 +437,7 @@ while not all_chapters_completed:
             tenth_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 11
-            time.sleep(2)  # Sleep for 2 seconds (adjust the delay as needed)
+            time.sleep(2)  # Sleep for 2 seconds 
 
     elif tenth_chapter_completed and not eleventh_chapter_completed:
             # Display game storyline and choices for Chapter 11
@@ -464,7 +467,7 @@ while not all_chapters_completed:
             eleventh_chapter_completed = True
 
             # Introduce a delay before moving to Chapter 12
-            time.sleep(2)  # Sleep for 2 seconds (adjust the delay as needed)
+            time.sleep(2)  # Sleep for 2 seconds 
 
     elif eleventh_chapter_completed and not twelfth_chapter_completed:
             # Display game storyline and choices for Chapter 12 (Final Boss)
@@ -476,8 +479,8 @@ while not all_chapters_completed:
             # Check if the conditions are met to engage in the final fight
             if strength >= 10 and (first_chapter_completed and second_chapter_completed and third_chapter_completed and fourth_chapter_completed):
                 print("You are well-prepared for this final battle, having made the right decisions and grown stronger throughout your journey.")
-                print("1. Engage in a fierce battle with the demon, drawing upon all your might and resolve. (+5 Strength)")
-                print("2. Attempt to negotiate with the demon, seeking a way to end the conflict peacefully. (+3 Health)")
+                print("1. Engage in a fierce battle with the demon, drawing upon all your might and resolve.")
+                print("2. Attempt to negotiate with the demon, seeking a way to end the conflict peacefully. ")
 
                 # Input validation loop for Chapter 12 (Final Boss)
                 while True:

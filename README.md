@@ -1,5 +1,6 @@
 # The Mighty Land of Elves and Dwarves
 
+![image](https://github.com/FabiMe/The-Mighty-Land-of-Elves-and-Dwarves/assets/136444209/68e9a275-8b67-4503-a736-86cff5de5887)
 Welcome to "The Mighty Land of Elves and Dwarves," a text-based adventure game where you embark on an epic journey, make crucial decisions, and shape your character's destiny in a land filled with mystical creatures and challenges.
 
 ## User Stories

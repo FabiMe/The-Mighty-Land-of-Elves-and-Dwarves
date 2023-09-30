@@ -211,11 +211,11 @@ while not all_chapters_completed:
 
         if choice == "1":
             print(
-                "You decide to take the safe route and walk around the tree,\nimproving your health.")
+                "You decide to take the safe route and walk around the tree.\n(+1 Health)")
             health += 1
         elif choice == "2":
             print(
-                f"You summon your {character_class}'s courage and attempt\nto get rid of the tree, gaining strength.")
+                f"You summon your {character_class}'s courage and attempt\nto get rid of the tree.(+1 Strength) ")
             strength += 1
 
         # Update character stats in Google Sheets for Chapter 1
@@ -316,9 +316,11 @@ while not all_chapters_completed:
             print(
                 "Unfortunately, you have not been able to earn a place in the Hall of Fame.")
             print("Fortunately, this is a magical adventure. Just try again.")
-            print(skull_ascii_art)
             # delay to be able to follow the story better
             time.sleep(4)  # Sleep for 2 seconds
+            print(skull_ascii_art)
+            # delay to be able to follow the story better
+            time.sleep(1)  # Sleep for 2 seconds
 
             # Reset character's stats to default based on class
             if class_choice == "1":
@@ -327,7 +329,7 @@ while not all_chapters_completed:
                 strength = 2
             elif class_choice == "2":
                 character_class = "Dwarf"
-                health = 20
+                health = 30
                 strength = 4
 
             # Reset all chapter completion variables to start the game again
@@ -563,7 +565,7 @@ while not all_chapters_completed:
 
         if choice == "1":
             print(
-                "You harness the power of the elements, gaining incredible strength. (+4 Strength)")
+                "You harness the power of the elements, gaining incredible strength.\n(+4 Strength)")
             strength += 4
         elif choice == "2":
             print(
@@ -585,7 +587,7 @@ while not all_chapters_completed:
         print("This is the ultimate test of your strength and courage")
 
         # Check if the conditions are met to engage in the final fight
-        if strength >= 10 and (first_chapter_completed and second_chapter_completed and third_chapter_completed and fourth_chapter_completed):
+        if strength >= 10 and health >= 20:
             print("You are well-prepared for this final battle,\nhaving made the right decisions and grown stronger throughout your journey.")
             print(
                 "1. Engage in a fierce battle with the demon,\ndrawing upon all your might and resolve.")

@@ -2,7 +2,7 @@
 
 ![image](https://github.com/FabiMe/The-Mighty-Land-of-Elves-and-Dwarves/assets/136444209/68e9a275-8b67-4503-a736-86cff5de5887)
 Welcome to "The Mighty Land of Elves and Dwarves," a text-based adventure game where you embark on an epic journey, make crucial decisions, and shape your character's destiny in a land filled with mystical creatures and challenges.
-
+[Try it yourself](https://elves-and-dwarves-f964c4624ea3.herokuapp.com/)
 ## User Stories
 
 ### Visitor Goals
@@ -45,7 +45,7 @@ Manual testing was performed to ensure the proper functionality of "The Mighty L
 
 | Description              | Steps to Reproduce                                    | Expected Outcome                                   | Actual Outcome | Pass/Fail |
 |--------------------------|--------------------------------------------------------|-----------------------------------------------------|-----------------|-----------|
-| Name Input Validation    | Start a new game and leave the character name field empty. Click "Start Game." | An alert message should appear: "Please enter your character's name before starting the game." | As expected | Pass      |
+| Name Input Validation    | Start a new game and leave the character name field empty. Click "Start Game." | An alert message should appear: "Invalid choice. Please enter 1 for Elf or 2 for Dwarf." | As expected | Pass      |
 | Character Selection      | Start a new game, choose a character class (Elf or Dwarf), and provide a character name. Click "Start Game." | The game should begin with the selected character class and name. | As expected | Pass      |
 | Storyline Progression    | Play through the game by making various choices at different story branches. | The narrative should progress based on the player's choices, leading to different outcomes. | As expected | Pass      |
 | Character Stats          | Monitor character health and strength throughout the game by making choices that affect these stats. | Character stats should change in response to player choices, influencing the gameplay. | As expected | Pass      |
@@ -82,15 +82,13 @@ These bug fixes enhance the overall gameplay experience and ensure that the game
 
 ## Deployment (Heroku.com)
 
-The game can be deployed on [Heroku](https://www.heroku.com/) for online accessibility. Follow these steps to deploy:
-1. Create a Heroku account if you don't have one.
-2. Install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) on your local machine.
-3. Log in to your Heroku account using the `heroku login` command.
-4. In your game's directory, create a `Procfile` with the following content:
-5. Commit your changes to your Git repository.
-6. Create a Heroku app using the `heroku create` command.
-7. Push your code to Heroku with `git push heroku master`.
-8. Open your game in a web browser using the Heroku app URL.
+The game can be deployed on [Heroku](https://www.heroku.com/) for online accessibility.
+1. Create a Heroku account.
+2. Connect github repositorie with Heroku account.
+3. Add Config Vars
+4. Add Buildpacks
+5. Activate Automatic deploys
+6. Make the first deploy manual to see if issues occur
 
 ## Credits
 

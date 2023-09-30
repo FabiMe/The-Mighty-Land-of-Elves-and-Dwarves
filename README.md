@@ -31,10 +31,20 @@ This game is designed for anyone who enjoys interactive storytelling, decision-m
 ## Features
 
 - Choose Your Character: Select your character class (Elf or Dwarf) and give them a unique name.
+![elves and dwarves](https://github.com/FabiMe/The-Mighty-Land-of-Elves-and-Dwarves/assets/136444209/38818e8a-a8b9-426f-b0f7-ac8bee6ca9fb)
+
 - Multiple Chapters: Navigate through a series of chapters, each with its own storyline and choices.
+
 - Character Development: Make decisions that affect your character's health and strength.
+
+- If you make the wrong decision in Chapter 4 or Chapter 12, the game will reset the game allowing you to take a different path.
+![dead](https://github.com/FabiMe/The-Mighty-Land-of-Elves-and-Dwarves/assets/136444209/2bcff9df-67c9-4d77-914d-660f255c3caa)
+
 - Final Showdown: Face a formidable demon in the ultimate showdown.
+
 - "Hall of Fame": Earn a place in the game's "Hall of Fame" by successfully completing all chapters.
+![hall of fame](https://github.com/FabiMe/The-Mighty-Land-of-Elves-and-Dwarves/assets/136444209/d50012e5-958f-4774-b1c1-dc02714d8f99)
+
 - Replayability: Explore different paths and outcomes by making different choices.
 
 ## Testing
@@ -56,7 +66,7 @@ Manual testing was performed to ensure the proper functionality of "The Mighty L
 
 ### Validator Testing
 - Validator testing with https://pep8ci.herokuapp.com/ 
-- There are no errors except that lines are too long (only lines in which the story is told). I cannot correct this error for the sake of comprehensibility.
+- There are no errors except that lines are too long (only lines in which the story is told). I have added line breaks to ensure readability in the console
 
 ## Bugs
 
@@ -93,5 +103,5 @@ The game can be deployed on [Heroku](https://www.heroku.com/) for online accessi
 ## Credits
 
 - Content inspiration and storytelling techniques were adapted from classic choose-your-own-adventure books and popular text-based games.
-- Special thanks to the open-source community for their contributions to libraries used in this project.
-
+- ASCII function to make the heading and the hall of fame (https://www.askpython.com/python-modules/ascii-art)
+- The Skull if you make the wrong decision (https://ascii.co.uk/art/skulls)
